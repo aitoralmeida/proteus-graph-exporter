@@ -24,7 +24,7 @@ class Graph:
         self.nodes = {}
         self.edges = []
     
-    def add_node(self, id, node_attributes):
+    def add_node(self, id, node_attributes = []):
         self.nodes[id] = node_attributes
     
     def add_edge(self, id_from, id_to):
@@ -95,9 +95,22 @@ class Graph:
     def export_graph_ncol(self, file_path):
          with open(file_path, 'w') as file:
               for rel in self.edges:
-                  file.write(str(rel[0]).replace(' ', '_') + " " + str(rel[1]).replace(' ', '_') + "\n")    
-
-
+                  file.write(str(rel[0]).replace(' ', '_') + " " + str(rel[1]).replace(' ', '_') + "\n")
+    
+    def import_graph_ncol(self, file_path):
+        with open(file_path, 'r') as file:
+            nodes = []
+            for line in file: 
+                line = line.strip()
+                n = line.split(' ')
+                nodes.append(n[0])
+                nodes.append(n[1])
+                self.add_edge(n[0], n[1])
+            
+            s = Set(nodes)
+            for node in s:
+                self.add_node(node)   
+  
 if __name__ == "__main__":
     g = Graph(False, "test", {'test_att' : 'string'})    
     g.add_node("node1", ["nodeatt1"])
@@ -110,5 +123,12 @@ if __name__ == "__main__":
     g.export_graph_ncol('./files/graphNCOL.txt')
     print 'Exporting GEFX'
     g.export_graph_gefx('./files/graphGEFX.gefx')    
-    print 'done'
+    
+    print 'importing graph'
+    g2 = Graph()
+    g2.import_graph_ncol('./files/graphNCOL.txt')
+    g2.export_graph_ncol('./files/graphNCOL2.txt')
+    g2.export_graph_gefx('./files/graphGEFX2.gefx') 
+    
+    
     
