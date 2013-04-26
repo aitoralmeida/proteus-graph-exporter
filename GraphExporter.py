@@ -6,6 +6,7 @@ Created on Fri Apr 26 10:46:10 2013
 """
 
 from time import gmtime, strftime
+import csv
 
 
 class Graph:
@@ -15,7 +16,7 @@ class Graph:
         else:
             self.type = 'undirected'
     
-        self.creator = 'GEFX_Exporter'
+        self.creator = 'Graph_exporter'
         self.description = description
         self.modified = strftime("%Y-%m-%d", gmtime())
         self.node_attributes = node_attributes
@@ -23,14 +24,10 @@ class Graph:
         self.edges = []
     
     def add_node(self, id, node_attributes):
-        #TODO add exception       
-        if not self.node_exists(id):
-            self.nodes[id] = node_attributes
+        self.nodes[id] = node_attributes
     
     def add_edge(self, id_from, id_to):
-        #TODO add exception    
-        if self.node_exists(id_from) and self.node_exists(id_to):
-            self.edges.append([id_from, id_to])
+        self.edges.append([id_from, id_to])
 
     def node_exists(self, id):
         if id in self.nodes.keys:
@@ -89,6 +86,11 @@ class Graph:
             f.write('    </graph>\n')
             f.write('</gexf>\n')
             
+    def export_graph_csv(self, file_path):
+        with open(file_path, 'wb') as output_file:
+            writer = csv.writer(output_file, delimiter=';')
+            for rel in self.edges:
+                writer.writerow(rel) 
 
 
 if __name__ == "__main__":
