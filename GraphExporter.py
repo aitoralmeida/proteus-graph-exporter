@@ -7,6 +7,7 @@ Created on Fri Apr 26 10:46:10 2013
 
 from time import gmtime, strftime
 import csv
+from sets import Set
 
 
 class Graph:
@@ -94,7 +95,7 @@ class Graph:
     def export_graph_ncol(self, file_path):
          with open(file_path, 'w') as file:
               for rel in self.edges:
-                  file.write(str(rel[0]) + " " + str(rel[1]) + "\n")    
+                  file.write(str(rel[0]).replace(' ', '_') + " " + str(rel[1]).replace(' ', '_') + "\n")    
 
 
 if __name__ == "__main__":
