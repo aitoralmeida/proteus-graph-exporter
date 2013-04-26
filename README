@@ -1,0 +1,6 @@
+A tool to export graphs to different formats.
+
+Formats supported:
+- CSV edgelist
+- NCOL edgelist
+- GEFX file format (http://gexf.net/format/basic.html)
