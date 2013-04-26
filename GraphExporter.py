@@ -36,10 +36,10 @@ class Graph:
             return False
             
     def export_graph_gefx(self, file_path):
-        with open(file_path, 'wb') as f:
+        with open(file_path, 'w') as f:
             # header
-            f.write = """<?xml version="1.0" encoding="UTF-8"?>\n"""
-            f.write = """<gexf xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd" version="1.2"\n"""
+            f.write("""<?xml version="1.0" encoding="UTF-8"?>\n""")
+            f.write("""<gexf xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd" version="1.2"\n""")
             
             # metadata
             f.write('    <meta lastmodifieddate="' + self.modified + '">\n')
@@ -91,8 +91,23 @@ class Graph:
             writer = csv.writer(output_file, delimiter=';')
             for rel in self.edges:
                 writer.writerow(rel) 
+    
+    def export_graph_ncol(self, file_path):
+         with open(file_path, 'w') as file:
+              for rel in self.edges:
+                  file.write(str(rel[0]) + " " + str(rel[1]) + "\n")    
 
 
 if __name__ == "__main__":
-    pass    
+    g = Graph(False, "test", {'test_att' : 'string'})    
+    g.add_node("node1", ["nodeatt1"])
+    g.add_node("node2", ["nodeatt2"])
+    g.add_edge('node1', 'node2')
+    
+    print 'Exporting csv'
+    g.export_graph_csv('./files/graphCSV.csv')
+    print 'Exporting ncol'
+    g.export_graph_ncol('./files/graphNCOL.txt')
+    print 'Exporting GEFX'
+    g.export_graph_gefx('./files/graphGEFX.gefx')    
     
