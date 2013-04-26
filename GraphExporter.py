@@ -109,7 +109,12 @@ class Graph:
             
             s = Set(nodes)
             for node in s:
-                self.add_node(node)   
+                self.add_node(node)
+                
+    def export_graph_edgelist_fanmod(self, file_path):
+         with open(file_path, 'w') as file:
+              for rel in self.edges:
+                  file.write(str(rel[0]).replace(' ', '_') + " " + str(rel[1]).replace(' ', '_') + " 1\n")
   
 if __name__ == "__main__":
     g = Graph(False, "test", {'test_att' : 'string'})    
