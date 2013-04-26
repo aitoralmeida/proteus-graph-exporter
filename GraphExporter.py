@@ -57,7 +57,7 @@ class Graph:
                 for att in self.node_attributes:
                     f.write('            <attribute id="' + str(i)  + '" title="' + att + " type=" + self.node_attributes[att] + '"/>\n' )
                     i += 1   
-                f.write('        </attributes>')
+                f.write('        </attributes>\n')
                 
             #nodes
             f.write('        <nodes>\n')
@@ -76,13 +76,12 @@ class Graph:
             
             #edges
             f.write('        <edges>\n')
-            f.write('        </edges>\n')
             i = 0
             for edge in self.edges:
                 f.write('            <edge id="' + str(i) + '" source="' +  edge[0] + '" target="' + edge[1] + '"/>\n')
                 i += 1
                 
-            
+            f.write('        </edges>\n')
             f.write('    </graph>\n')
             f.write('</gexf>\n')
             
