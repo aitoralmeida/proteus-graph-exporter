@@ -1,6 +1,7 @@
 A tool to export graphs to different formats.
 
 Formats supported:
-- CSV edgelist
+- CSV edgelist (https://gephi.org/users/supported-graph-formats/csv-format/)
 - NCOL edgelist
+- FANMOD edgelist (http://theinf1.informatik.uni-jena.de/~wernicke/motifs/) 
 - GEFX file format (http://gexf.net/format/basic.html)
