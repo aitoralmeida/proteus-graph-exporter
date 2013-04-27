@@ -24,8 +24,9 @@ class Graph:
         self.nodes = {}
         self.edges = []
     
-    def add_node(self, id, node_attributes = []):
-        self.nodes[id] = node_attributes
+    def add_node(self, id, label = "", node_attributes = []):
+        node = Node(id, label, node_attributes)
+        self.nodes[id] = node
     
     def add_edge(self, id_from, id_to):
         self.edges.append([id_from, id_to])
@@ -62,13 +63,13 @@ class Graph:
                 
             #nodes
             f.write('        <nodes>\n')
-            for node in self.nodes:
+            for node in self.nodes.values():
                 # right niow the id and label of the node are the same
-                f.write('        <node id="' + node  + '" label="'+ node +'">\n')
-                if len(self.nodes[node]) > 0:
+                f.write('        <node id="' + node.id  + '" label="'+ node.label +'">\n')
+                if len(node.attributes) > 0:
                     f.write('            <attvalues>\n')
                     i = 0
-                    for att in self.nodes[node]:
+                    for att in node.attributes:
                         f.write('             <attvalue for="' + str(i) +'" value="' + att + '"/>\n')
                         i += 1
                     f.write('            </attvalues>\n')
@@ -116,10 +117,17 @@ class Graph:
               for rel in self.edges:
                   file.write(str(rel[0]).replace(' ', '_') + " " + str(rel[1]).replace(' ', '_') + " 1\n")
   
+class Node:
+    def __init__(self, id, label, attributes):
+        self.id = id
+        self.label = label
+        self.attributes = attributes
+
+
 if __name__ == "__main__":
     g = Graph(False, "test", {'test_att' : 'string'})    
-    g.add_node("node1", ["nodeatt1"])
-    g.add_node("node2", ["nodeatt2"])
+    g.add_node("node1", "first node", ["nodeatt1"])
+    g.add_node("node2", "second node", ["nodeatt2"])
     g.add_edge('node1', 'node2')
     
     print 'Exporting csv'
