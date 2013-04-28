@@ -24,12 +24,12 @@ class Graph:
         self.nodes = {}
         self.edges = []
     
-    def add_node(self, id, label = "", node_attributes = []):
+    def add_node(self, id, node_attributes = [], label = ""):
         node = Node(id, label, node_attributes)
         self.nodes[id] = node
     
-    def add_edge(self, id_from, id_to):
-        self.edges.append([id_from, id_to])
+    def add_edge(self, id_from, id_to, label = ""):
+        self.edges.append(Edge(id_from, id_to, label))
 
     def node_exists(self, id):
         if id in self.nodes.keys:
@@ -80,7 +80,7 @@ class Graph:
             f.write('        <edges>\n')
             i = 0
             for edge in self.edges:
-                f.write('            <edge id="' + str(i) + '" source="' +  edge[0] + '" target="' + edge[1] + '"/>\n')
+                f.write('            <edge id="' + str(i) + '" source="' +  edge.id_from + '" target="' + edge.id_to + '"/>\n')
                 i += 1
                 
             f.write('        </edges>\n')
@@ -123,12 +123,19 @@ class Node:
         self.label = label
         self.attributes = attributes
 
+class Edge:
+    def __init__(self, id_from, id_to, label=""):
+        self.label = label
+        self.id_from = id_from
+        self.id_to = id_to
 
 if __name__ == "__main__":
     g = Graph(False, "test", {'test_att' : 'string'})    
-    g.add_node("node1", "first node", ["nodeatt1"])
-    g.add_node("node2", "second node", ["nodeatt2"])
+    g.add_node("node1", ["nodeatt1"], "first node")
+    g.add_node("node2", ["nodeatt2"], "second node")
+    g.add_node("node3", ["nodeatt3"], "third node")
     g.add_edge('node1', 'node2')
+    g.add_edge('node2', 'node3', 'edge2')
     
     print 'Exporting csv'
     g.export_graph_csv('./files/graphCSV.csv')
