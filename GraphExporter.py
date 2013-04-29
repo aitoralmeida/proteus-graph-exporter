@@ -8,6 +8,7 @@ Created on Fri Apr 26 10:46:10 2013
 from time import gmtime, strftime
 import csv
 from sets import Set
+import re
 
 
 class Graph:
@@ -25,7 +26,7 @@ class Graph:
         self.edges = []
     
     def add_node(self, id, node_attributes = [], label = ""):
-        node = Node(id, label, node_attributes)
+        node = Node(id, node_attributes, label)
         self.nodes[id] = node
     
     def add_edge(self, id_from, id_to, label = ""):
@@ -99,6 +100,7 @@ class Graph:
                   file.write(str(rel.id_from).replace(' ', '_') + " " + str(rel.id_to).replace(' ', '_') + "\n")
     
     def import_graph_edgelist_ncol(self, file_path):
+        self.clean()        
         with open(file_path, 'r') as file:
             nodes = []
             for line in file: 
@@ -133,13 +135,61 @@ class Graph:
                 file.write('    [\n')
                 file.write('        source ' + str(edge.id_from) + '\n')
                 file.write('        target ' + str(edge.id_to) + '\n')
-                file.write('        label "' + node.label + '"\n')
+                file.write('        label "' + edge.label + '"\n')
                 file.write('    ]\n')
                 
             file.write(']\n')
             
+    def import_graph_gml(self, file_path):
+        self.clean()
+        with open(file_path, 'r') as file:
+            node_data = False
+            edge_data = False
+            ID = ''
+            label = ''
+            source = ''
+            target = ''
+            for line in file: 
+                line = line.strip()
+                if 'node' in line and len(line.split(' ')) == 1:
+                    node_data = True
+                    edge_data = False
+                    ID = ''
+                    label = ''
+                    source = ''
+                    target = ''
+                elif 'edge' in line and len(line.split(' ')) == 1:
+                    edge_data = True
+                    node_data = False
+                    ID = ''
+                    label = ''
+                    source = ''
+                    target = ''
+                elif 'id' in line:
+                    ID = line.split()[1]
+                elif 'label' in line:
+                    label = line.split('"')[1]
+                elif 'source' in line:
+                     source = line.split()[1]
+                elif 'target' in line:
+                    target = line.split()[1]
+                elif ']' in line:
+                    if node_data:
+                        self.add_node(id=ID, label=label)
+                        node_data = False
+                    elif edge_data:
+                        self.add_edge(source, target, label)
+                        edge_data = False
+    
+    def clean(self):
+        self.modified = strftime("%Y-%m-%d", gmtime())
+        self.nodes = {}
+        self.edges = []
+        
+        
+     
 class Node:
-    def __init__(self, id, label, attributes):
+    def __init__(self, id, attributes, label):
         self.id = id
         self.label = label
         self.attributes = attributes
@@ -167,11 +217,17 @@ if __name__ == "__main__":
     print 'Exporting GML'
     g.export_graph_gml('./files/graphGML.gml')        
     
-    print 'importing graph'
+    print 'importing graph ncol'
     g2 = Graph()
     g2.import_graph_edgelist_ncol('./files/graphNCOL.txt')
     g2.export_graph_edgelist_ncol('./files/graphNCOL2.txt')
     g2.export_graph_gefx('./files/graphGEFX2.gefx') 
+    
+    print 'importing graph gml'
+    g3 = Graph()
+    g3.import_graph_gml('./files/graphGML.gml')
+    g3.export_graph_edgelist_ncol('./files/graphNCOL3.txt')
+    g3.export_graph_gml('./files/graphGML2.gml') 
     
     
     
