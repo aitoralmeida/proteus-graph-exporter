@@ -87,18 +87,18 @@ class Graph:
             f.write('    </graph>\n')
             f.write('</gexf>\n')
             
-    def export_graph_csv(self, file_path):
+    def export_graph_edgelist_csv(self, file_path):
         with open(file_path, 'wb') as output_file:
             writer = csv.writer(output_file, delimiter=';')
             for rel in self.edges:
-                writer.writerow(rel) 
+                writer.writerow([rel.id_from, rel.id_to]) 
     
-    def export_graph_ncol(self, file_path):
+    def export_graph_edgelist_ncol(self, file_path):
          with open(file_path, 'w') as file:
               for rel in self.edges:
-                  file.write(str(rel[0]).replace(' ', '_') + " " + str(rel[1]).replace(' ', '_') + "\n")
+                  file.write(str(rel.id_from).replace(' ', '_') + " " + str(rel.id_to).replace(' ', '_') + "\n")
     
-    def import_graph_ncol(self, file_path):
+    def import_graph_edgelist_ncol(self, file_path):
         with open(file_path, 'r') as file:
             nodes = []
             for line in file: 
@@ -115,8 +115,29 @@ class Graph:
     def export_graph_edgelist_fanmod(self, file_path):
          with open(file_path, 'w') as file:
               for rel in self.edges:
-                  file.write(str(rel[0]).replace(' ', '_') + " " + str(rel[1]).replace(' ', '_') + " 1\n")
+                  file.write(str(rel.id_from).replace(' ', '_') + " " + str(rel.id_to).replace(' ', '_') + " 1\n")
   
+    def export_graph_gml(self, file_path):
+        with open(file_path, 'w') as file:
+            file.write('graph\n')
+            file.write('[\n')
+            for node in self.nodes.values():
+                file.write('    node\n')
+                file.write('    [\n')
+                file.write('        id ' + str(node.id) + '\n')
+                file.write('        label "' + node.label + '"\n')
+                file.write('    ]\n')
+            
+            for edge in self.edges:
+                file.write('    edge\n')
+                file.write('    [\n')
+                file.write('        source ' + str(edge.id_from) + '\n')
+                file.write('        target ' + str(edge.id_to) + '\n')
+                file.write('        label "' + node.label + '"\n')
+                file.write('    ]\n')
+                
+            file.write(']\n')
+            
 class Node:
     def __init__(self, id, label, attributes):
         self.id = id
@@ -138,16 +159,18 @@ if __name__ == "__main__":
     g.add_edge('node2', 'node3', 'edge2')
     
     print 'Exporting csv'
-    g.export_graph_csv('./files/graphCSV.csv')
+    g.export_graph_edgelist_csv('./files/graphCSV.csv')
     print 'Exporting ncol'
-    g.export_graph_ncol('./files/graphNCOL.txt')
+    g.export_graph_edgelist_ncol('./files/graphNCOL.txt')
     print 'Exporting GEFX'
-    g.export_graph_gefx('./files/graphGEFX.gefx')    
+    g.export_graph_gefx('./files/graphGEFX.gefx')
+    print 'Exporting GML'
+    g.export_graph_gml('./files/graphGML.gml')        
     
     print 'importing graph'
     g2 = Graph()
-    g2.import_graph_ncol('./files/graphNCOL.txt')
-    g2.export_graph_ncol('./files/graphNCOL2.txt')
+    g2.import_graph_edgelist_ncol('./files/graphNCOL.txt')
+    g2.export_graph_edgelist_ncol('./files/graphNCOL2.txt')
     g2.export_graph_gefx('./files/graphGEFX2.gefx') 
     
     
