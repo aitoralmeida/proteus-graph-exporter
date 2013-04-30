@@ -8,8 +8,6 @@ Created on Fri Apr 26 10:46:10 2013
 from time import gmtime, strftime
 import csv
 from sets import Set
-import re
-
 
 class Graph:
     def __init__(self, directed=False, description = '', node_attributes = {}):
@@ -99,8 +97,7 @@ class Graph:
               for rel in self.edges:
                   file.write(str(rel.id_from).replace(' ', '_') + " " + str(rel.id_to).replace(' ', '_') + "\n")
     
-    def import_graph_edgelist_ncol(self, file_path):
-        self.clean()        
+    def import_graph_edgelist_ncol(self, file_path):     
         with open(file_path, 'r') as file:
             nodes = []
             for line in file: 
@@ -141,7 +138,6 @@ class Graph:
             file.write(']\n')
             
     def import_graph_gml(self, file_path):
-        self.clean()
         with open(file_path, 'r') as file:
             node_data = False
             edge_data = False
@@ -180,14 +176,7 @@ class Graph:
                     elif edge_data:
                         self.add_edge(source, target, label)
                         edge_data = False
-    
-    def clean(self):
-        self.modified = strftime("%Y-%m-%d", gmtime())
-        self.nodes = {}
-        self.edges = []
         
-        
-     
 class Node:
     def __init__(self, id, attributes, label):
         self.id = id
@@ -200,34 +189,5 @@ class Edge:
         self.id_from = id_from
         self.id_to = id_to
 
-if __name__ == "__main__":
-    g = Graph(False, "test", {'test_att' : 'string'})    
-    g.add_node("node1", ["nodeatt1"], "first node")
-    g.add_node("node2", ["nodeatt2"], "second node")
-    g.add_node("node3", ["nodeatt3"], "third node")
-    g.add_edge('node1', 'node2')
-    g.add_edge('node2', 'node3', 'edge2')
-    
-    print 'Exporting csv'
-    g.export_graph_edgelist_csv('./files/graphCSV.csv')
-    print 'Exporting ncol'
-    g.export_graph_edgelist_ncol('./files/graphNCOL.txt')
-    print 'Exporting GEFX'
-    g.export_graph_gefx('./files/graphGEFX.gefx')
-    print 'Exporting GML'
-    g.export_graph_gml('./files/graphGML.gml')        
-    
-    print 'importing graph ncol'
-    g2 = Graph()
-    g2.import_graph_edgelist_ncol('./files/graphNCOL.txt')
-    g2.export_graph_edgelist_ncol('./files/graphNCOL2.txt')
-    g2.export_graph_gefx('./files/graphGEFX2.gefx') 
-    
-    print 'importing graph gml'
-    g3 = Graph()
-    g3.import_graph_gml('./files/graphGML.gml')
-    g3.export_graph_edgelist_ncol('./files/graphNCOL3.txt')
-    g3.export_graph_gml('./files/graphGML2.gml') 
-    
     
     
