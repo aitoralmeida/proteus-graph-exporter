@@ -5,3 +5,4 @@ Formats supported:
 - NCOL edgelist
 - FANMOD edgelist (http://theinf1.informatik.uni-jena.de/~wernicke/motifs/) 
 - GEFX file format (http://gexf.net/format/basic.html)
+- GML file format (http://www.fim.uni-passau.de/en/fim/faculty/chairs/theoretische-informatik/projects.html)
