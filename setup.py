@@ -6,13 +6,13 @@ from setuptools import setup
 # TODO: select categories
 classifiers=[
     "Development Status :: 4 - Beta",
-    "Environment :: Web Environment",
+    "Environment :: Console",
     "Intended Audience :: Developers",
     "License :: Freely Distributable",
     "Operating System :: OS Independent",
     "Programming Language :: Python",
     "Programming Language :: Python :: 2",
-    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 
 cp_license="MIT"
