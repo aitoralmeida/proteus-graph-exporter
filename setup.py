@@ -3,7 +3,6 @@
 #-*-*- encoding: utf-8 -*-*-
 from setuptools import setup
 
-# TODO: select categories
 classifiers=[
     "Development Status :: 4 - Beta",
     "Environment :: Console",
@@ -17,13 +16,13 @@ classifiers=[
 
 cp_license="MIT"
 
-setup(name='graph-exporter',
+setup(name='proteus-graph',
       version='0.2',
       description="A  library to export network graphs to different formats",
       classifiers=classifiers,
       author='Aitor Almeida',
       author_email='aitor.almeida@deusto.es',
-      url='http://github.com/aitoralmeida/graph-exporter',
+      url='http://github.com/aitoralmeida/proteus-graph-exporter',
       license=cp_license,
-      py_modules=['graph_exporter'],
+      py_modules=['proteus_graph'],
      )
