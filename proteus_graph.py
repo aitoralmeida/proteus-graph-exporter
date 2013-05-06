@@ -7,7 +7,6 @@ Created on Fri Apr 26 10:46:10 2013
 
 from time import gmtime, strftime
 import csv
-from sets import Set
 
 class Graph:
     def __init__(self, directed=False, description = '', node_attributes = {}):
@@ -99,16 +98,15 @@ class Graph:
     
     def import_graph_edgelist_ncol(self, file_path):     
         with open(file_path, 'r') as file:
-            nodes = []
+            nodes = set()
             for line in file: 
                 line = line.strip()
                 n = line.split(' ')
-                nodes.append(n[0])
-                nodes.append(n[1])
+                nodes.add(n[0])
+                nodes.add(n[1])
                 self.add_edge(n[0], n[1])
             
-            s = Set(nodes)
-            for node in s:
+            for node in nodes:
                 self.add_node(node)
                 
     def export_graph_edgelist_fanmod(self, file_path):

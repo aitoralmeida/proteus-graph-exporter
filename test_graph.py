@@ -5,7 +5,7 @@ Created on Mon Apr 29 16:08:55 2013
 @author: aitor
 """
 
-from graph_exporter import Graph 
+from proteus_graph import Graph 
 import unittest
 import os
 
