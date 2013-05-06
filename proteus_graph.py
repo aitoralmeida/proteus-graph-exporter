@@ -23,8 +23,9 @@ class Graph:
         self.edges = []
     
     def add_node(self, id, node_attributes = [], label = ""):
-        node = Node(id, node_attributes, label)
-        self.nodes[id] = node
+        if not self.node_exists(id):
+            node = Node(id, node_attributes, label)
+            self.nodes[id] = node
     
     def add_edge(self, id_from, id_to, label = ""):
         self.edges.append(Edge(id_from, id_to, label))
