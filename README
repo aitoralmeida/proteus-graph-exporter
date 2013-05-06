@@ -12,5 +12,5 @@ Formats supported
 How to install it
 =================
 
-- Using pip: pip install git+https://github.com/aitoralmeida/graph-exporter.git
+- Using pip: pip install git+https://github.com/aitoralmeida/proteus-graph-exporter.git
 - Downloading the code: python setup install
