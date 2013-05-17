@@ -30,17 +30,17 @@ class Graph:
     def add_edge(self, id_from, id_to, label = ""):
         self.edges.append(Edge(id_from, id_to, label))
 
-    def node_exists(self, id):
-        if id in self.nodes.keys:
+    def node_exists(self, id): 
+        if id in self.nodes:
             return True
         else:
             return False
             
-    def export_graph_gefx(self, file_path):
+    def export_graph_gexf(self, file_path):
         with open(file_path, 'w') as f:
             # header
             f.write("""<?xml version="1.0" encoding="UTF-8"?>\n""")
-            f.write("""<gexf xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd" version="1.2"\n""")
+            f.write("""<gexf xmlns="http://www.gexf.net/1.2draft" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.gexf.net/1.2draft http://www.gexf.net/1.2draft/gexf.xsd" version="1.2"\n>""")
             
             # metadata
             f.write('    <meta lastmodifieddate="' + self.modified + '">\n')
@@ -56,7 +56,7 @@ class Graph:
                 f.write('        <attributes class="node">\n')
                 i = 0
                 for att in self.node_attributes:
-                    f.write('            <attribute id="' + str(i)  + '" title="' + att + " type=" + self.node_attributes[att] + '"/>\n' )
+                    f.write('            <attribute id="' + str(i)  + '" title="' + att + '" type="' + self.node_attributes[att] + '"/>\n' )
                     i += 1   
                 f.write('        </attributes>\n')
                 

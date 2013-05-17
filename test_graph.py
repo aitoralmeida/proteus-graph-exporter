@@ -15,7 +15,7 @@ class TestSGraph(unittest.TestCase):
         if not os.path.exists('./files'):
             os.makedirs('./files')
 
-    def test_export_csv(self):
+    def test_export_csv(self): 
         g = Graph(False, "test", {'test_att' : 'string'})    
         g.add_node("node1", ["nodeatt1"], "first node")
         g.add_node("node2", ["nodeatt2"], "second node")
@@ -73,6 +73,16 @@ class TestSGraph(unittest.TestCase):
                     lineB = fileB.readline()
                     self.assertEquals(lineA, lineB)
                     lineA = fileA.readline()
+                    
+    def test_export_gexf(self):
+        g = Graph(False, "test", {'test_att' : 'string'})    
+        g.add_node("node1", ["nodeatt1"], "first node")
+        g.add_node("node2", ["nodeatt2"], "second node")
+        g.add_node("node3", ["nodeatt3"], "third node")
+        g.add_edge('node1', 'node2')
+        g.add_edge('node2', 'node3', 'edge2')
+
+        g.export_graph_gexf('./files/graph.gexf')
                     
         
 
