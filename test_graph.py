@@ -16,7 +16,7 @@ class TestSGraph(unittest.TestCase):
             os.makedirs('./files')
 
     def test_export_csv(self): 
-        g = Graph(False, "test", {'test_att' : 'string'})    
+        g = Graph(False, "test", [('test_att', 'string')])    
         g.add_node("node1", ["nodeatt1"], "first node")
         g.add_node("node2", ["nodeatt2"], "second node")
         g.add_node("node3", ["nodeatt3"], "third node")
@@ -34,7 +34,7 @@ class TestSGraph(unittest.TestCase):
                 i += 1
                 
     def test_export_import_ncol(self):
-        g = Graph(False, "test", {'test_att' : 'string'})    
+        g = Graph(False, "test", [('test_att', 'string')])  
         g.add_node("node1", ["nodeatt1"], "first node")
         g.add_node("node2", ["nodeatt2"], "second node")
         g.add_node("node3", ["nodeatt3"], "third node")
@@ -55,7 +55,7 @@ class TestSGraph(unittest.TestCase):
         self.assertEquals('node3', g2.edges[1].id_to) 
         
     def test_export_import_gml(self):
-        g = Graph(False, "test", {'test_att' : 'string'})    
+        g = Graph(False, "test", [('test_att', 'string')])    
         g.add_node("node1", ["nodeatt1"], "first node")
         g.add_node("node2", ["nodeatt2"], "second node")
         g.add_node("node3", ["nodeatt3"], "third node")
@@ -75,7 +75,7 @@ class TestSGraph(unittest.TestCase):
                     lineA = fileA.readline()
                     
     def test_export_gexf(self):
-        g = Graph(False, "test", {'test_att' : 'string'})    
+        g = Graph(False, "test", [('test_att', 'string')])    
         g.add_node("node1", ["nodeatt1"], "first node")
         g.add_node("node2", ["nodeatt2"], "second node")
         g.add_node("node3", ["nodeatt3"], "third node")

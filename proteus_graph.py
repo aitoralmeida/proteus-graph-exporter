@@ -9,7 +9,7 @@ from time import gmtime, strftime
 import csv
 
 class Graph:
-    def __init__(self, directed=False, description = '', node_attributes = {}):
+    def __init__(self, directed=False, description = '', node_attributes = []):
         if directed:
             self.type = 'directed'
         else:
@@ -56,7 +56,7 @@ class Graph:
                 f.write('        <attributes class="node">\n')
                 i = 0
                 for att in self.node_attributes:
-                    f.write('            <attribute id="' + str(i)  + '" title="' + att + '" type="' + self.node_attributes[att] + '"/>\n' )
+                    f.write('            <attribute id="' + str(i)  + '" title="' + att[0] + '" type="' + att[1] + '"/>\n' )
                     i += 1   
                 f.write('        </attributes>\n')
                 
