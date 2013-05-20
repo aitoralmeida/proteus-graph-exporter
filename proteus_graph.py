@@ -117,18 +117,15 @@ class Graph:
   
     def export_graph_gml(self, file_path):
         with open(file_path, 'w') as file:
-            file.write('graph\n')
-            file.write('[\n')
+            file.write('graph [\n')
             for node in self.nodes.values():
-                file.write('    node\n')
-                file.write('    [\n')
+                file.write('    node [\n')
                 file.write('        id ' + str(node.id) + '\n')
                 file.write('        label "' + node.label + '"\n')
                 file.write('    ]\n')
             
             for edge in self.edges:
-                file.write('    edge\n')
-                file.write('    [\n')
+                file.write('    edge [\n')
                 file.write('        source ' + str(edge.id_from) + '\n')
                 file.write('        target ' + str(edge.id_to) + '\n')
                 file.write('        label "' + edge.label + '"\n')
@@ -146,14 +143,14 @@ class Graph:
             target = ''
             for line in file: 
                 line = line.strip()
-                if 'node' in line and len(line.split(' ')) == 1:
+                if ('node [' in line) or ('node' in line and len(line.split(' ')) == 1):
                     node_data = True
                     edge_data = False
                     ID = ''
                     label = ''
                     source = ''
                     target = ''
-                elif 'edge' in line and len(line.split(' ')) == 1:
+                elif ('edge [' in line)  or ('edge' in line and len(line.split(' ')) == 1) :
                     edge_data = True
                     node_data = False
                     ID = ''
